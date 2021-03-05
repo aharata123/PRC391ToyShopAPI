@@ -27,15 +27,28 @@ namespace PRC391ToyShopAPI.Controllers
         {
             var toys = await _toyService.GetAllToys();
 
-            if(toys == null)
+            if (toys == null)
             {
                 return StatusCode(404);
-            } else 
+            } else
                 return StatusCode(200, toys);
         }
 
+        [HttpGet("id")]
+        public async Task<ActionResult<List<ToyModel>>> GetToyByID(int id)
+        {
+            var toy = await _toyService.FindToyByID(id);
+
+            if (toy == null)
+            {
+                return StatusCode(404);
+            }
+            else
+                return StatusCode(200, toy);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<string>> CreateNewToy([FromForm] CreateToyViewModel model)
+        public async Task<ActionResult<string>> CreateNewToy([FromBody] CreateToyViewModel model)
         {
             int id = await _toyService.CreateNewToy(model);
 
@@ -50,7 +63,7 @@ namespace PRC391ToyShopAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateToy([FromForm] CreateToyViewModel model, int id)
+        public async Task<ActionResult> UpdateToy([FromBody] CreateToyViewModel model, int id)
         {
             bool isUpdated = await _toyService.UpdateToy(model, id);
 

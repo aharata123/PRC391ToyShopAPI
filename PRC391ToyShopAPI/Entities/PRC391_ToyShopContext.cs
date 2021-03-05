@@ -52,12 +52,16 @@ namespace PRC391ToyShopAPI.Entities
 
                 entity.Property(e => e.DateOfBirth)
                     .HasColumnName("date_of_birth")
-                    .HasMaxLength(50);
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
 
                 entity.Property(e => e.FullName)
                     .IsRequired()
                     .HasColumnName("full_name")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.Password)
                     .IsRequired()
@@ -69,6 +73,13 @@ namespace PRC391ToyShopAPI.Entities
                     .HasMaxLength(50);
 
                 entity.Property(e => e.RoleId).HasColumnName("role_id");
+
+                entity.Property(e => e.Sex)
+                    .IsRequired()
+                    .HasColumnName("sex")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Accounts)

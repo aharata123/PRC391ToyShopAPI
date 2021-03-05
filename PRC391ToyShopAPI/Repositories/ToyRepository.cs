@@ -13,9 +13,12 @@ namespace PRC391ToyShopAPI.Repositories.Repository
     public interface IToyRepository
     {
         Task<List<Toy>> GetAllToys();
+        Task<Toy> FindToyByID(int id);
         Task<int> CreateNewToy(Toy toy);
         Task<bool> UpdateToy(CreateToyViewModel model, int id);
         Task<bool> DeleteToy(int id);
+   
+        
         
     }
 
@@ -36,6 +39,14 @@ namespace PRC391ToyShopAPI.Repositories.Repository
                 .ToListAsync();
 
             return result;
+        }
+
+        public async Task<Toy> FindToyByID(int id)
+        {
+            Toy toy = await _context.Toys.Include(c => c.Category)
+                .Where(item => item.ToyId == id).FirstOrDefaultAsync();
+
+            return toy;
         }
         public async Task<int> CreateNewToy(Toy model)
         {

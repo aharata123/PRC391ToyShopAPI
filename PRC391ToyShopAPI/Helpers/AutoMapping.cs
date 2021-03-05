@@ -17,10 +17,14 @@ namespace PRC391ToyShopAPI.Helpers
             
             CreateMap<Category, CategoryModel>();
 
+            CreateMap<Account, AccountModel>();
+
 
             // DTO to DAO
 
             CreateMap<CreateToyViewModel, Toy>();
+
+            CreateMap<AccountModel, Account>();
             
         }
         

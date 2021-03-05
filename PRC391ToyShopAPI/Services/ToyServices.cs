@@ -12,6 +12,7 @@ namespace PRC391ToyShopAPI.Services
     public interface IToyService
     {
         Task<List<ToyModel>> GetAllToys();
+        Task<ToyModel> FindToyByID(int id);
         Task<int> CreateNewToy(CreateToyViewModel model);
         Task<bool> UpdateToy(CreateToyViewModel model, int id);
         Task<bool> DeleteToy(int id);
@@ -44,6 +45,19 @@ namespace PRC391ToyShopAPI.Services
             bool status = await _toy.DeleteToy(id);
 
             return status;
+        }
+
+        public async Task<ToyModel> FindToyByID(int id)
+        {
+            var toy = await _toy.FindToyByID(id);
+            if(toy == null)
+            {
+                return null;
+            } else
+            {
+                var model = _mapper.Map<ToyModel>(toy);
+                return model;
+            }
         }
 
         public async Task<List<ToyModel>> GetAllToys()

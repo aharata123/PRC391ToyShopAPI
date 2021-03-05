@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PRC391ToyShopAPI.Entities;
 using PRC391ToyShopAPI.Handlers;
+using PRC391ToyShopAPI.Repositories;
 using PRC391ToyShopAPI.Repositories.Repository;
 using PRC391ToyShopAPI.Services;
 using System;
@@ -58,10 +59,11 @@ namespace PRC391ToyShopAPI
 
             // Repository
             services.AddScoped<IToyRepository, ToyRepository>();
-
+            services.AddScoped<IAccountRepository, AccountRepository>();
 
             // Service
             services.AddScoped<IToyService, ToyService>();
+            services.AddScoped<IAccountService, AccountServices>();
 
         }
 

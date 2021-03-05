@@ -19,8 +19,11 @@ namespace PRC391ToyShopAPI.Entities
         public string FullName { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public string DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public int RoleId { get; set; }
+        public bool Disabled { get; set; }
+        public string Sex { get; set; }
+        public string Image { get; set; }
 
         public virtual Role Role { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
