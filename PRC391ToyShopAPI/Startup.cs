@@ -60,6 +60,7 @@ namespace PRC391ToyShopAPI
             // Repository
             services.AddScoped<IToyRepository, ToyRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             // Service
             services.AddScoped<IToyService, ToyService>();

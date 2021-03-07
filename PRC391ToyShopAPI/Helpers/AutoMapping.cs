@@ -25,6 +25,8 @@ namespace PRC391ToyShopAPI.Helpers
             CreateMap<CreateToyViewModel, Toy>();
 
             CreateMap<AccountModel, Account>();
+
+            CreateMap<ToyPurchaseModel, ToyInOrder>();
             
         }
         
