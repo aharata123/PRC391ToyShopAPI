@@ -13,6 +13,7 @@ namespace PRC391ToyShopAPI.Repositories
     public interface IOrderRepository
     {
         Task<int> Purchase(string username, List<ToyPurchaseModel> cart);
+        Task<List<PurchaseHistoryModel>> GetPurchaseHistory(string username);
 
     }
     public class OrderRepository : IOrderRepository
@@ -26,6 +27,37 @@ namespace PRC391ToyShopAPI.Repositories
             _mapper = mapper;
 
         }
+
+        public async Task<List<PurchaseHistoryModel>> GetPurchaseHistory(string username)
+        {
+            List<PurchaseHistoryModel> history = new List<PurchaseHistoryModel>();
+            List<Order> listOrders = await _context.Orders.Where(order => order.Username.Equals(username)).OrderByDescending(order => order.DateOrder).ToListAsync();
+
+            for (int i = 0; i < listOrders.Count; i++)
+            {
+                int idOrder = listOrders[i].OrderId;
+                List<ToyInOrder> toys = await _context.ToyInOrders.Where(toys => toys.OrderId == idOrder)
+                    .Include(t => t.Toy)
+                    .ToListAsync();
+
+                List<ToyModel> list = new List<ToyModel>();
+                for (int k = 0; k < toys.Count; k++)
+                {
+                    Toy toy = toys[k].Toy;
+                    toy.Quantity = toys[k].Quantity;
+                    toy.Price = toys[k].Price;
+                    ToyModel toyModel = _mapper.Map<ToyModel>(toy);
+                    list.Add(toyModel);
+                }
+
+                PurchaseHistoryModel model = new PurchaseHistoryModel(idOrder,listOrders[i].Username, listOrders[i].DateOrder, list);
+                history.Add(model);
+            }
+
+            return history;
+
+        }
+
         public async Task<int> Purchase(string username, List<ToyPurchaseModel> cart)
         {
             int status = SystemStatusCode.FAIL;

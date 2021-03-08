@@ -87,7 +87,7 @@ namespace PRC391ToyShopAPI.Repositories
 
         public async Task<Account> Login(LoginModel model)
         {
-            var account = _context.Accounts.Where(account => account.Username.Equals(model.Username) && account.Password.Equals(model.Password))
+            var account = _context.Accounts.Where(account => account.Username.Equals(model.Username) && account.Password.Equals(model.Password) && account.Disabled == false)
                 .Include(t => t.Role).FirstOrDefault();
             return account;
         }

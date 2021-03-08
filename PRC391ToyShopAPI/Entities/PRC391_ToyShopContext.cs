@@ -108,7 +108,7 @@ namespace PRC391ToyShopAPI.Entities
 
                 entity.Property(e => e.DateOrder)
                     .HasColumnName("date_order")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Username)
                     .IsRequired()

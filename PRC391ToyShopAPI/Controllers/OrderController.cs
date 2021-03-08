@@ -24,6 +24,15 @@ namespace PRC391ToyShopAPI.Controllers
             _context = context;
             _orderRepo = orderRepo;
         }
+
+        [HttpGet("PurchaseHistory/{username}")]
+        public async Task<List<PurchaseHistoryModel>> GetHistory(string username)
+        {
+            List<PurchaseHistoryModel> list = await _orderRepo.GetPurchaseHistory(username);
+            return list;
+        }
+
+
         [HttpPost("{username}")]
         public async Task<ActionResult> Login([FromBody] List<ToyPurchaseModel> cart, string username)
         {

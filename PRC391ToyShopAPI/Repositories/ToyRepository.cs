@@ -44,13 +44,19 @@ namespace PRC391ToyShopAPI.Repositories.Repository
         public async Task<Toy> FindToyByID(int id)
         {
             Toy toy = await _context.Toys.Include(c => c.Category)
-                .Where(item => item.ToyId == id).FirstOrDefaultAsync();
+                .Where(item => item.ToyId == id && item.IsDeleted == false).FirstOrDefaultAsync();
 
             return toy;
         }
         public async Task<int> CreateNewToy(Toy model)
         {
              int id = SystemStatusCode.FAIL ;
+
+            // check if quantity is valid
+            if(model.Quantity < 0)
+            {
+                return id;
+            }
 
             try
             {
@@ -73,6 +79,11 @@ namespace PRC391ToyShopAPI.Repositories.Repository
             bool isUpdated = false;
 
             Toy toy = await _context.Toys.FindAsync(id);
+
+            if (model.Quantity < 0)
+            {
+                return isUpdated;
+            }
 
 
             if (toy != null)
