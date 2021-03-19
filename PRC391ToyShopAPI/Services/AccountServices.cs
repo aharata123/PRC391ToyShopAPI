@@ -15,6 +15,7 @@ namespace PRC391ToyShopAPI.Services
 
         Task<List<AccountModel>> GetAccounts();
 
+        Task<AccountModel> GetAccountByUsername(string username);
 
         Task<int> CreateNewAccount(AccountModel model);
         Task<bool> UpdateAccount(AccountModel model, string username);
@@ -49,6 +50,13 @@ namespace PRC391ToyShopAPI.Services
             bool status = await _account.DeleteAccount(username);
 
             return status;
+        }
+
+        public async Task<AccountModel> GetAccountByUsername(string username)
+        {
+            var result = await _account.GetAccountByUsername(username);
+
+            return result;
         }
 
         public async Task<List<AccountModel>> GetAccounts()

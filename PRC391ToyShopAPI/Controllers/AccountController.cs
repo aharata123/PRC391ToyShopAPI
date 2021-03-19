@@ -41,6 +41,20 @@ namespace PRC391ToyShopAPI.Controllers
                 return StatusCode(200, accounts);
         }
 
+        [HttpGet("{username}")]
+        public async Task<ActionResult<List<AccountModel>>> GetAccountByUsername(string username)
+        {
+            var account = await _accountService.GetAccountByUsername(username);
+
+            if (account == null)
+            {
+                return StatusCode(404);
+            }
+            else
+                return StatusCode(200, account);
+        }
+
+
 
 
         // PUT: api/Accounts/5

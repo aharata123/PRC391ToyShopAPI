@@ -14,6 +14,7 @@ namespace PRC391ToyShopAPI.Repositories
     public interface IAccountRepository
     {
         Task<List<Account>> GetAccounts();
+        Task<AccountModel> GetAccountByUsername(string username);
         Task<int> CreateNewAccount(Account account);
         Task<bool> UpdateAccount(AccountModel model, string username);
         Task<bool> DeleteAccount(string username);
@@ -75,6 +76,17 @@ namespace PRC391ToyShopAPI.Repositories
 
             }
             return isDeleted;
+        }
+
+        public async Task<AccountModel> GetAccountByUsername(string username)
+        {
+            AccountModel model = null;
+            var result = await _context.Accounts.FindAsync(username);
+            if(result != null)
+            {
+                model = _mapper.Map<AccountModel>(result);
+            }
+            return model;
         }
 
         public async Task<List<Account>> GetAccounts()
